@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SegmAi Cloud: Powering Global AI Advancement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices:
+        - SegmAi Cloud Overview: Text, Hero section. Goal: Inform.
+        - Vision: Text. Goal: Inform.
+        - Core Platform (PlasmAi, SegmAi Cloud, SegmAi): HTML/CSS/JS interactive elements (click to reveal text). Goal: Organize, Inform. Method: Structured HTML + JS.
+        - Technology Explainer (Gemini API): Button next to "Contractual Intelligent Computing Network" to get AI explanation. Goal: Inform, Clarify.
+        - Key Services (Compute, AIGC, Broader AI Capabilities, etc.): HTML/Tailwind cards with icons & text, organized with tabs. Goal: Inform, Organize. Interaction: Tab selection, hover effects on cards. Justification: Concise presentation of diverse offerings.
+        - AI Service Idea Generator (Gemini API): Input field and button in Services section to generate service ideas. Goal: Engage, Ideate.
+        - Differentiators (Assembly Service Time Saving, IP Asset Library Performance): Bar Charts (Chart.js). Goal: Compare. Interaction: Static charts with tooltips. Justification: Visually quantifies key benefits.
+        - Global Team: Text and simple visual (Unicode flags). Goal: Inform.
+        - Why Partner: Text lists. Goal: Inform.
+        - Textual Content: Extracted and summarized from the report, organized into thematic sections with intros. Goal: Inform, Explain.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: #2563EB; /* Blue-600 */ }
+        .section-title-underline { border-bottom: 2px solid #2563EB; padding-bottom: 0.5rem; display: inline-block; }
+        .card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .tab-button { padding: 0.5rem 1rem; border-radius: 0.375rem; transition: background-color 0.3s ease, color 0.3s ease; border: 1px solid transparent; }
+        .tab-button.active { background-color: #2563EB; color: white; border-color: #2563EB; } /* Blue-600 */
+        .tab-button:not(.active) { border-color: #CBD5E1; /* Slate-300 */ color: #475569; /* Slate-600 */ }
+        .tab-button:not(.active):hover { background-color: #EFF6FF; /* Blue-50 */ border-color: #93C5FD; /* Blue-300 */ }
+        .interactive-diagram-item { cursor: pointer; transition: background-color 0.3s, border-color 0.3s; border: 2px solid transparent; }
+        .interactive-diagram-item:hover, .interactive-diagram-item.selected { background-color: #DBEAFE; /* Blue-100 */ border-color: #93C5FD; /* Blue-300 */ }
+        .details-box { border-left: 4px solid #2563EB; /* Blue-600 */ }
+        .tag { background-color: #DBEAFE; color: #1E40AF; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block;} /* Blue-100, Blue-800 */
+        .hero-gradient { background-image: linear-gradient(to right, #EFF6FF, #DBEAFE, #BFDBFE); } /* Blue-50, Blue-100, Blue-200 */
+        .gemini-feature-card { background-color: #E0F2FE; border: 1px solid #7DD3FC; } /* Sky-100, Sky-300, slightly different blue for Gemini features */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #2563EB; /* Blue-600 */
+            animation: spin 1s ease infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <nav id="navbar" class="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-blue-700">SegmAi Cloud</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#vision" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Our Vision</a>
+                        <a href="#platform" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Platform</a>
+                        <a href="#services" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Services</a>
+                        <a href="#differentiators" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Differentiators</a>
+                        <a href="#team" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Global Team</a>
+                        <a href="#partner" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Partner With Us</a>
+                        <a href="#contact" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" type="button" class="bg-slate-100 inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-blue-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#vision" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Our Vision</a>
+                <a href="#platform" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Platform</a>
+                <a href="#services" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#differentiators" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Differentiators</a>
+                <a href="#team" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Global Team</a>
+                <a href="#partner" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Partner With Us</a>
+                <a href="#contact" class="nav-link text-slate-600 hover:bg-blue-50 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-gradient py-20 md:py-32">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-blue-700 mb-6">SegmAi Cloud</h1>
+            <p class="text-xl md:text-2xl text-slate-700 mb-8 max-w-3xl mx-auto">Powering Global AI Advancement and Collaborative Innovation through our GenAI Productivity Fusion Service Network.</p>
+            <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition duration-300 text-lg">Explore Collaboration</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-16 md:space-y-24">
+
+        <section id="vision">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">Our Vision: Engineering the Future</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">This section outlines our core philosophy and the role of SegmAi Cloud in the evolving AI landscape. We aim to make sophisticated AI tools "readily accessible and within reach," fostering an environment of human-AI co-creation.</p>
+            <div class="bg-white p-8 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-semibold text-blue-700 mb-4 text-center">The Philosophy of "Realizing Co-creation between Humans and AI"</h3>
+                <p class="text-slate-700 leading-relaxed">Our foundational belief is that AI's true potential is unlocked in synergy with human intelligence. SegmAi Cloud is engineered to cultivate this collaborative environment, empowering diverse users to leverage AI for enhanced decision-making and innovation. We aim to accelerate the entire Generative AI lifecycle, from ideation to deployment, through an integrated, trustworthy network where computing power, AI models, data, and services converge.</p>
+            </div>
+        </section>
+
+        <section id="platform">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">The SegmAi Cloud Platform</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">Explore the integrated architecture of SegmAi Cloud, designed for robust performance, scalability, and collaborative innovation. Click on the components below to learn more about their specific roles and contributions to our GenAI Productivity Fusion Service Network.</p>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div id="plasm-ai-item" class="interactive-diagram-item p-6 bg-sky-50 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">PlasmAi</h3>
+                    <p class="text-sm text-slate-600">Optimizing Foundational Compute</p>
+                </div>
+                <div id="segm-ai-cloud-core-item" class="interactive-diagram-item p-6 bg-blue-50 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-2">SegmAi Cloud Core</h3>
+                    <p class="text-sm text-slate-600">GenAI Productivity Fusion Network</p>
+                </div>
+                <div id="segm-ai-ops-item" class="interactive-diagram-item p-6 bg-indigo-50 rounded-lg shadow-md"> <h3 class="text-xl font-semibold text-indigo-700 mb-2">SegmAi</h3>
+                    <p class="text-sm text-slate-600">Integrated GenAI Ops Enablement</p>
+                </div>
+            </div>
+            <div id="platform-details-box" class="mt-8 p-6 bg-white rounded-lg shadow-lg details-box hidden">
+                <h4 id="details-title" class="text-2xl font-semibold mb-3 text-blue-700"></h4>
+                <p id="details-text" class="text-slate-700 leading-relaxed"></p>
+            </div>
+             <div class="mt-10 bg-white p-8 rounded-lg shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-semibold text-blue-700 text-center md:text-left">Contractual Intelligent Computing Network</h3>
+                    <button id="explain-cicn-button" class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded-lg text-sm transition duration-300">
+                        Explain with AI ✨
+                    </button>
+                </div>
+                <p class="text-slate-700 leading-relaxed text-center md:text-left">A cornerstone of our platform, this network establishes a trusted, multi-party collaboration system. It integrates diverse computing resources, AI models, and services, ensuring high-quality resource management and service guarantees. Key features include auditable multi-party accounting (reportedly within 50ms), fostering transparency and enabling all participants to share in the benefits of AI development.</p>
+                <div id="cicn-explanation-box" class="mt-4 p-4 bg-sky-50 rounded-lg border border-sky-200 hidden">
+                    <div id="cicn-explanation-spinner" class="hidden items-center"><div class="spinner"></div><span>Generating explanation...</span></div>
+                    <p id="cicn-explanation-content" class="text-slate-700 text-sm"></p>
+                    <p id="cicn-explanation-error" class="text-red-600 text-sm hidden"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">Comprehensive AI Services & Solutions</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">We offer a full spectrum of AI services, from foundational cloud compute to specialized Generative AI applications and strategic consulting. This section details our capabilities, organized by service type, to help you find the solutions that best fit your business needs. Explore our AI-powered tools below to generate service ideas!</p>
+            
+            <div class="my-12 p-6 rounded-lg shadow-xl gemini-feature-card">
+                <h3 class="text-2xl font-semibold text-sky-700 mb-4 text-center">✨ AI Service Idea Generator</h3>
+                <p class="text-slate-700 mb-4 text-center">Describe your industry or a business challenge, and let our AI generate innovative service ideas for you!</p>
+                <textarea id="service-idea-input" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" rows="3" placeholder="E.g., 'Retail industry struggling with inventory management' or 'Healthcare sector needing better patient engagement tools'"></textarea>
+                <button id="generate-service-ideas-button" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center justify-center">
+                    <span id="generate-ideas-button-text">Get AI Service Ideas</span>
+                    <div id="generate-ideas-spinner" class="spinner hidden ml-2"></div>
+                </button>
+                <div id="service-ideas-output" class="mt-6 space-y-4">
+                    </div>
+                <p id="service-ideas-error" class="text-red-600 text-sm mt-2 hidden"></p>
+            </div>
+
+            <div class="mb-8 flex flex-wrap justify-center gap-2 md:gap-4">
+                <button class="tab-button active" data-tab="platform-services">Platform Services</button>
+                <button class="tab-button" data-tab="generative-ai">Generative AI</button>
+                <button class="tab-button" data-tab="core-ai">Core AI & Data</button>
+                <button class="tab-button" data-tab="consulting">Delivery & Consulting</button>
+            </div>
+
+            <div id="tab-content-platform-services" class="tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Cloud Compute</h3>
+                    <p class="text-slate-600 text-sm mb-3">Robust GPU-powered infrastructure (A100, H100, 4090) with options for Bare Metal, VMs, and Containers. High-speed InfiniBand networking.</p>
+                    <div><span class="tag">Infrastructure</span><span class="tag">GPU</span><span class="tag">Scalability</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Assembly Service</h3>
+                    <p class="text-slate-600 text-sm mb-3">Rapidly deploy complex AI environments in minutes, saving 50-90% of traditional setup time. No specialized DevOps skills needed.</p>
+                     <div><span class="tag">Deployment</span> <span class="tag">GenAI Ops</span> <span class="tag">Efficiency</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">IP Asset Library</h3>
+                    <p class="text-slate-600 text-sm mb-3">Access pre-optimized acceleration components for VLLM, NeRF, Llama3, and more, significantly boosting performance and efficiency.</p>
+                    <div><span class="tag">Acceleration</span> <span class="tag">Performance</span> <span class="tag">Optimization</span></div>
+                </div>
+            </div>
+
+            <div id="tab-content-generative-ai" class="tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Large Language Models (LLMs)</h3>
+                    <p class="text-slate-600 text-sm mb-3">Development, fine-tuning, and deployment of LLMs. Our AIGC service supports dozens of mainstream models and custom agent creation.</p>
+                    <div><span class="tag">LLM</span> <span class="tag">AIGC</span> <span class="tag">NLP</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Text-to-Image</h3>
+                    <p class="text-slate-600 text-sm mb-3">Generate high-quality visuals from text using our SegmAi Art Service, leveraging optimized Stable Diffusion models.</p>
+                     <div><span class="tag">Text-to-Image</span> <span class="tag">AIGC</span> <span class="tag">Creative AI</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Text-to-Speech & Digital Humans</h3>
+                    <p class="text-slate-600 text-sm mb-3">Advanced Text-to-Speech, voice cloning (GPT-SOVITS), and realistic lip-sync (MuseTalk) for interactive digital human applications.</p>
+                    <div><span class="tag">Text-to-Speech</span> <span class="tag">Digital Human</span> <span class="tag">Voice AI</span></div>
+                </div>
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Chatbots</h3>
+                    <p class="text-slate-600 text-sm mb-3">Develop sophisticated AI chatbots for customer service, internal support, and interactive applications, leveraging LLM capabilities.</p>
+                    <div><span class="tag">Chatbot</span> <span class="tag">Conversational AI</span> <span class="tag">Automation</span></div>
+                </div>
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Variational Autoencoders (VAEs)</h3>
+                    <p class="text-slate-600 text-sm mb-3">Expertise in VAEs for generative modeling, anomaly detection, and advanced data representation tasks.</p>
+                    <div><span class="tag">VAE</span> <span class="tag">Generative Models</span> <span class="tag">Deep Learning</span></div>
+                </div>
+            </div>
+
+            <div id="tab-content-core-ai" class="tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Machine Learning</h3>
+                    <p class="text-slate-600 text-sm mb-3">End-to-end ML model development, training, inference, and MLOps for predictive analytics and intelligent automation.</p>
+                    <div><span class="tag">ML</span> <span class="tag">Predictive Analytics</span> <span class="tag">MLOps</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Data Science & Analytics</h3>
+                    <p class="text-slate-600 text-sm mb-3">Unlock insights from your data through advanced analysis, pattern recognition, and predictive modeling solutions.</p>
+                     <div><span class="tag">Data Science</span> <span class="tag">Analytics</span> <span class="tag">Insights</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Data Annotation</h3>
+                    <p class="text-slate-600 text-sm mb-3">High-quality data annotation services to prepare and enrich datasets for training robust AI and ML models.</p>
+                    <div><span class="tag">Data Annotation</span> <span class="tag">AI Training</span> <span class="tag">Data Quality</span></div>
+                </div>
+            </div>
+            
+            <div id="tab-content-consulting" class="tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Delivery & Project Execution</h3>
+                    <p class="text-slate-600 text-sm mb-3">End-to-end management of AI projects, from ideation and PoC to full-scale deployment and operational support.</p>
+                    <div><span class="tag">AI Delivery</span> <span class="tag">Project Management</span> <span class="tag">Execution</span></div>
+                </div>
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Service Development</h3>
+                    <p class="text-slate-600 text-sm mb-3">Custom AI service development tailored to your specific business challenges and requirements.</p>
+                    <div><span class="tag">Custom AI</span> <span class="tag">Solutions</span> <span class="tag">Bespoke</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Integration</h3>
+                    <p class="text-slate-600 text-sm mb-3">Seamlessly integrate AI capabilities into your existing enterprise systems and workflows for maximum impact.</p>
+                    <div><span class="tag">Integration</span> <span class="tag">Enterprise AI</span> <span class="tag">Workflows</span></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Consulting & Research</h3>
+                    <p class="text-slate-600 text-sm mb-3">Strategic guidance, feasibility studies, technology roadmaps, and research into novel AI applications.</p>
+                    <div><span class="tag">Consulting</span> <span class="tag">Strategy</span> <span class="tag">Research</span></div>
+                </div>
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">AI Frameworks & Technology</h3>
+                    <p class="text-slate-600 text-sm mb-3">Expertise in leveraging and optimizing various AI frameworks and technologies to build scalable solutions.</p>
+                    <div><span class="tag">Frameworks</span> <span class="tag">Technology</span> <span class="tag">Expertise</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="differentiators">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">Key Differentiators</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">Our platform offers unique advantages in speed, efficiency, and collaborative potential. This section highlights tangible performance gains and streamlined AI operations that set SegmAi Cloud apart, showcased through data and descriptions of our core technologies.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Assembly Service: Time Saved</h3>
+                    <p class="text-slate-600 mb-6">Drastically reduce AI environment deployment times from days or hours to minutes. Our Assembly Service can save 50-90% of traditional setup time, accelerating your path to innovation.</p>
+                    <div class="chart-container">
+                        <canvas id="assemblyTimeChart"></canvas>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">IP Asset Library: Performance Boost</h3>
+                    <p class="text-slate-600 mb-6">Leverage pre-optimized components for significant performance improvements. For example, our VLLM inference acceleration can be up to 15x faster than standard Hugging Face Transformers.</p>
+                    <div class="chart-container">
+                        <canvas id="vllmPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-10 bg-white p-8 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-semibold text-blue-700 mb-4 text-center">Advanced Resource Management & Orchestration</h3>
+                <p class="text-slate-700 leading-relaxed">SegmAi Cloud features a sophisticated Cross-Regional Resource Sharing & Scheduling Engine, including a Trusted Node Engine for secure GPU sharing, Advanced Compute Planning for topology-aware resource pooling, our rapid Assembly Engine, and a Service Awareness & Repair Engine for robust O&M. This integrated system is engineered for scalability, security, and operational excellence.</p>
+            </div>
+        </section>
+
+        <section id="team">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">Our International Team</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">This section introduces our global team structure. Leveraging US-China synergies, our diverse team brings together expertise from leading technology hubs to serve a global clientele and expand overseas business, ensuring culturally relevant and technically robust solutions.</p>
+            <div class="bg-white p-8 rounded-lg shadow-xl grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">Bridging Global AI Expertise</h3>
+                    <p class="text-slate-700 leading-relaxed mb-4">Our team's presence in both the United States and China provides a unique strategic advantage. This international composition fosters diverse perspectives, access to a broad talent pool, and the ability to incorporate best practices from different technological cultures, leading to more robust and globally relevant AI solutions.</p>
+                    <p class="text-slate-700 leading-relaxed">We are committed to understanding the unique needs of overseas markets and building lasting international partnerships, adhering to global standards in AI ethics, data privacy, and security.</p>
+                </div>
+                <div class="flex justify-center items-center">
+                    <div class="text-6xl md:text-8xl space-x-2 sm:space-x-4">
+                        <span role="img" aria-label="USA Flag">🇺🇸</span>
+                        <span class="text-blue-500 mx-1 sm:mx-2 text-4xl md:text-6xl">+</span>
+                        <span role="img" aria-label="China Flag">🇨🇳</span>
+                        <span class="text-blue-500 mx-1 sm:mx-2 text-4xl md:text-6xl">➔</span>
+                        <span role="img" aria-label="Globe">🌍</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="partner">
+            <h2 class="text-3xl font-bold text-center mb-4 section-title-underline">Partnering with SegmAi Cloud</h2>
+            <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">We offer a compelling value proposition for enterprises, research institutions, developers, and operational & IP asset partners. This section details the benefits of joining our vibrant collaborative AI ecosystem, aiming to be your strategic ally for international AI initiatives.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-3">For AI Users & Developers</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-2 text-sm">
+                        <li>Cost-effective access to high-performance GPU computing.</li>
+                        <li>Accelerated development and deployment cycles.</li>
+                        <li>Simplified AI operations with a one-stop platform.</li>
+                        <li>Access to cutting-edge models, tools, and optimized components.</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-3">For Operational & IP Asset Partners</h3> <ul class="list-disc list-inside text-slate-600 space-y-2 text-sm">
+                        <li>Monetize idle compute resources through trusted access.</li>
+                        <li>Manage and accelerate self-owned compute with elastic sharing.</li>
+                        <li>Deploy and monetize AI models and IP in an open GenAI ecosystem.</li>
+                        <li>Reach a broader audience and unlock commercial value.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-blue-600 text-white py-16 md:py-24 rounded-lg shadow-2xl">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6">Let's Innovate Together</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto">We invite potential clients, technology partners, and collaborators to explore how SegmAi Cloud can power your AI ambitions. Reach out to discuss your specific needs and discover the future of AI co-creation. Our commitment remains: "Realizing Co-creation between Humans and AI."</p>
+                <a href="https://www.sigmai.net/" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-slate-100 text-blue-700 font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition duration-300 text-lg">Visit Sigmai.net</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; <span id="currentYear"></span> SegmAi Acceleration. All rights reserved.</p>
+            <p>SegmAi Cloud - Powering the Future of AI.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOpenIcon = mobileMenuButton.querySelector('svg:first-child');
+        const mobileMenuCloseIcon = mobileMenuButton.querySelector('svg:last-child');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuOpenIcon.classList.toggle('hidden');
+            mobileMenuCloseIcon.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a, #navbar a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.hash !== "") {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(link.hash);
+                    if (targetElement) {
+                        const offset = document.getElementById('navbar').offsetHeight;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = targetElement.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                if (mobileMenu.classList.contains('hidden') === false) {
+                    mobileMenuButton.click();
+                }
+            });
+        });
+        
+        const navLinks = document.querySelectorAll('#navbar a[href^="#"]');
+        const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+        const allNavLinks = [...navLinks, ...mobileNavLinks];
+        const sections = document.querySelectorAll('main section[id]');
+        const navbarHeight = document.getElementById('navbar').offsetHeight;
+
+        function updateActiveLink() {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - navbarHeight - 20) { 
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            allNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveLink);
+        document.addEventListener('DOMContentLoaded', updateActiveLink);
+
+
+        const platformItemsDetails = {
+            'plasm-ai-item': {
+                title: 'PlasmAi: Optimizing Foundational Compute',
+                text: 'PlasmAi enhances operational efficiency and coordinates scheduling for the foundational AI compute infrastructure. It ensures a stable, cost-effective base, particularly beneficial for AI infrastructure operators like data centers and telecom providers, ultimately benefiting all SegmAi Cloud users through improved performance and stability.'
+            },
+            'segm-ai-cloud-core-item': {
+                title: 'SegmAi Cloud Core: GenAI Productivity Fusion Network',
+                text: 'This is the heart of our offering, integrating compute power, AI models, data, and development tools into a cohesive ecosystem. SegmAi Cloud Core is designed for one-stop development, deployment, and operations, making advanced AI accessible and accelerating innovation cycles for enterprises and developers.'
+            },
+            'segm-ai-ops-item': {
+                title: 'SegmAi: Integrated GenAI Ops Enablement',
+                text: 'SegmAi provides the tools and environment for building, deploying, and managing AI applications, with a special focus on Generative AI. This platform caters to LLM developers, enterprises, research institutions, and AI application service providers, streamlining the GenAI lifecycle.'
+            }
+        };
+
+        const platformDiagramItems = document.querySelectorAll('.interactive-diagram-item');
+        const detailsBox = document.getElementById('platform-details-box');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsText = document.getElementById('details-text');
+
+        platformDiagramItems.forEach(item => {
+            item.addEventListener('click', () => {
+                platformDiagramItems.forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                const itemId = item.id;
+                if (platformItemsDetails[itemId]) {
+                    detailsTitle.textContent = platformItemsDetails[itemId].title;
+                    detailsText.textContent = platformItemsDetails[itemId].text;
+                    detailsBox.classList.remove('hidden');
+                }
+            });
+        });
+        
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                tabContents.forEach(content => {
+                    content.classList.toggle('hidden', content.id !== `tab-content-${tabId}`);
+                });
+            });
+        });
+
+        const assemblyCtx = document.getElementById('assemblyTimeChart').getContext('2d');
+        new Chart(assemblyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Traditional Deployment', 'SegmAi Assembly Service'],
+                datasets: [{
+                    label: 'Deployment Time (Normalized Hours)',
+                    data: [100, 25], 
+                    backgroundColor: ['rgba(156, 163, 175, 0.6)', 'rgba(59, 130, 246, 0.6)'], // Grey, Blue-500
+                    borderColor: ['rgba(107, 114, 128, 1)', 'rgba(37, 99, 235, 1)'], // Grey-500, Blue-700
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Relative Time Effort' } } },
+                plugins: { legend: { display: false }, tooltip: {
+                    callbacks: { label: ctx => `${ctx.dataset.label || ''}: ${ctx.parsed.y} (Represents 50-90% saving for SegmAi)` }
+                }}
+            }
+        });
+
+        const vllmCtx = document.getElementById('vllmPerformanceChart').getContext('2d');
+        new Chart(vllmCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Baseline (e.g., HF Transformers)', 'SegmAi VLLM Acceleration'],
+                datasets: [{
+                    label: 'Inference Speed (Relative Throughput)',
+                    data: [100, 1500],
+                     backgroundColor: ['rgba(209, 213, 219, 0.6)', 'rgba(29, 78, 216, 0.6)'], // Grey-300, Blue-700
+                    borderColor: ['rgba(156, 163, 175, 1)', 'rgba(30, 64, 175, 1)'], // Grey-400, Blue-800
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Relative Performance (Higher is Better)' } } },
+                plugins: { legend: { display: false }, tooltip: {
+                    callbacks: { label: ctx => `${ctx.dataset.label || ''}: ${ctx.parsed.y} (Up to 15x faster for SegmAi)`}
+                }}
+            }
+        });
+
+        // Gemini API Integration
+        const apiKey = ""; // Intentionally empty as per instructions
+
+        // Technology Explainer: Contractual Intelligent Computing Network (CICN)
+        const explainCicnButton = document.getElementById('explain-cicn-button');
+        const cicnExplanationBox = document.getElementById('cicn-explanation-box');
+        const cicnExplanationSpinner = document.getElementById('cicn-explanation-spinner');
+        const cicnExplanationContent = document.getElementById('cicn-explanation-content');
+        const cicnExplanationError = document.getElementById('cicn-explanation-error');
+
+        explainCicnButton.addEventListener('click', async () => {
+            cicnExplanationBox.classList.remove('hidden');
+            cicnExplanationSpinner.classList.remove('hidden');
+            cicnExplanationSpinner.style.display = 'flex'; 
+            cicnExplanationContent.textContent = '';
+            cicnExplanationError.classList.add('hidden');
+
+            const prompt = "Explain the concept of a 'Contractual Intelligent Computing Network' in simple terms for a business audience. Highlight its key benefits. Keep the explanation concise, around 100-150 words.";
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    cicnExplanationContent.textContent = text;
+                } else {
+                    console.error('Gemini API Error:', result);
+                    cicnExplanationError.textContent = 'Error generating explanation. The response structure was unexpected.';
+                    cicnExplanationError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                cicnExplanationError.textContent = 'Failed to fetch explanation. Please check your network connection or try again later.';
+                cicnExplanationError.classList.remove('hidden');
+            } finally {
+                cicnExplanationSpinner.classList.add('hidden');
+                cicnExplanationSpinner.style.display = 'none';
+            }
+        });
+
+        // AI Service Idea Generator
+        const serviceIdeaInput = document.getElementById('service-idea-input');
+        const generateServiceIdeasButton = document.getElementById('generate-service-ideas-button');
+        const serviceIdeasOutput = document.getElementById('service-ideas-output');
+        const serviceIdeasError = document.getElementById('service-ideas-error');
+        const generateIdeasSpinner = document.getElementById('generate-ideas-spinner');
+        const generateIdeasButtonText = document.getElementById('generate-ideas-button-text');
+
+        generateServiceIdeasButton.addEventListener('click', async () => {
+            const userInput = serviceIdeaInput.value.trim();
+            if (!userInput) {
+                serviceIdeasError.textContent = 'Please describe your industry or business challenge.';
+                serviceIdeasError.classList.remove('hidden');
+                return;
+            }
+
+            generateIdeasButtonText.textContent = 'Generating Ideas...';
+            generateIdeasSpinner.classList.remove('hidden');
+            serviceIdeasOutput.innerHTML = '';
+            serviceIdeasError.classList.add('hidden');
+            generateServiceIdeasButton.disabled = true;
+
+            const prompt = `Based on the following industry/business challenge: "${userInput}", generate 3 innovative AI service ideas that SegmAi Cloud could potentially offer. For each idea, provide a clear title, a brief description (2-3 sentences), and 2-3 key potential benefits. Format each idea clearly.`;
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    const ideas = text.split('\n\n').filter(idea => idea.trim() !== ''); 
+                    
+                    if (ideas.length > 0) {
+                        ideas.forEach(ideaText => {
+                            const ideaCard = document.createElement('div');
+                            ideaCard.className = 'p-4 bg-white rounded-lg shadow-md border border-blue-200';
+                            let formattedIdeaText = ideaText.replace(/^(Idea \d+:|Title:)\s*/i, '<strong class="text-blue-600">$1</strong> ');
+                            formattedIdeaText = formattedIdeaText.replace(/\n\s*(Description:)/gi, '<br><strong class="text-slate-600">$1</strong>');
+                            formattedIdeaText = formattedIdeaText.replace(/\n\s*(Benefits:)/gi, '<br><strong class="text-slate-600">$1</strong>');
+                            
+                            ideaCard.innerHTML = formattedIdeaText.split('\n').join('<br>');
+                            serviceIdeasOutput.appendChild(ideaCard);
+                        });
+                    } else {
+                        serviceIdeasOutput.innerHTML = '<p class="text-slate-600">No ideas generated, or the format was not recognized.</p>';
+                    }
+
+                } else {
+                    console.error('Gemini API Error:', result);
+                    serviceIdeasError.textContent = 'Error generating service ideas. The response structure was unexpected.';
+                    serviceIdeasError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                serviceIdeasError.textContent = 'Failed to fetch service ideas. Please check your network connection or try again later.';
+                serviceIdeasError.classList.remove('hidden');
+            } finally {
+                generateIdeasButtonText.textContent = 'Get AI Service Ideas';
+                generateIdeasSpinner.classList.add('hidden');
+                generateServiceIdeasButton.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>
